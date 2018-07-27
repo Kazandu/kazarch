@@ -30,15 +30,16 @@ net_config () {
 read -p "Do you have DHCP active in your Network (y/n)?" choice
 case "$choice" in 
   y|Y ) 
-net_config ;;
+	net_config ;;
 
-  n|N ) IFS=", " read -ra arr <<< "$(drill kazandu.moe)"
-			if [[ "${arr[1]}" != "rcode: NOERROR" ]]; then
+  n|N ) 
+  	IFS=", " read -ra arr <<< "$(drill kazandu.moe)"
+		if [[ "${arr[1]}" != "rcode: NOERROR" ]]; then
     			echo "Seems like Internet isn't working properly, starting Network config..."
-				net_config
-			else
+			net_config
+		else
     			echo "Skipping network configuration..."
-			fi ;;
+		fi ;;
 esac
 gdisk /dev/sda << EOCMD
 n
@@ -78,7 +79,9 @@ cp /kazarch/post-install.sh /mnt/kazarch
 #reboot i commented out down there back in 
 read -p "[PROMPT FOR TESTING: Reboot (y/n)?]" choice
 case "$choice" in 
-  y|Y ) reboot;;
-  n|N ) exit;;
+  y|Y ) 
+  	reboot;;
+  n|N ) 
+  	exit;;
 esac
 #reboot
