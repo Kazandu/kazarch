@@ -16,10 +16,10 @@ net_config () {
 
 	while read -ru 10 ln; do
 		IFS=" " read -ra parsed <<< "$ln"
-			if (( ${#parsed[@]} > 4 )) && [[ "${parsed[1]}" != "lo:" ]]; then
+		if (( ${#parsed[@]} > 4 )) && [[ "${parsed[1]}" != "lo:" ]]; then
 			NETDEV="${parsed[1]::-1}"
 			break
-			fi
+		fi
 	done 10< <(ip link show)
 
 	loadkeys de-latin1
@@ -34,12 +34,12 @@ case "$choice" in
 
   n|N ) 
   	IFS=", " read -ra arr <<< "$(drill kazandu.moe)"
-		if [[ "${arr[1]}" != "rcode: NOERROR" ]]; then
-    			echo "Seems like Internet isn't working properly, starting Network config..."
-			net_config
-		else
-    			echo "Skipping network configuration..."
-		fi ;;
+	if [[ "${arr[1]}" != "rcode: NOERROR" ]]; then
+    		echo "Seems like Internet isn't working properly, starting Network config..."
+		net_config
+	else
+    		echo "Skipping network configuration..."
+	fi ;;
 esac
 gdisk /dev/sda << EOCMD
 n
