@@ -25,7 +25,7 @@ Connection=ethernet
 IP=static
 Address=("$NETADDR")
 Gateway="192.168.88.253"
-DNS=("192.168.88.10" "1.1.1.1")
+DNS=("192.168.88.10","1.1.1.1")
 NETCFG
 ip link set "$NETDEV" down
 netctl start "$NETDEV"

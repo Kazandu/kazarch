@@ -27,12 +27,9 @@ net_config () {
 	ip addr add "$IN_ADDR" broadcast "$IN_BCAST" dev "$NETDEV"
 	ip route add default via "$IN_GATEWAY"
 }
-read -p "Do you have DHCP active in your Network (y/n)?" choice
-case "$choice" in 
+read -p "Do you have DHCP active in your Network (y/n)?" netchoice
+case "$netchoice" in 
   y|Y ) 
-	net_config ;;
-
-  n|N ) 
   	IFS=", " read -ra arr <<< "$(drill kazandu.moe)"
 	if [[ "${arr[1]}" != "rcode: NOERROR" ]]; then
     		echo "Seems like Internet isn't working properly, starting Network config..."
@@ -40,6 +37,8 @@ case "$choice" in
 	else
     		echo "Skipping network configuration..."
 	fi ;;
+  n|N ) 
+	net_config ;;
 esac
 gdisk /dev/sda << EOCMD
 n
@@ -77,8 +76,8 @@ mkdir /mnt/kazarch
 cp /kazarch/post-install.sh /mnt/kazarch
 #using this to prevent it from rebooting too fast until its final, if its finished just remove the prompt and put the
 #reboot i commented out down there back in 
-read -p "[PROMPT FOR TESTING: Reboot (y/n)?]" choice
-case "$choice" in 
+read -p "[PROMPT FOR TESTING: Reboot (y/n)?]" rebootchoice
+case "$rebootchoice" in 
   y|Y ) 
   	reboot;;
   n|N ) 
