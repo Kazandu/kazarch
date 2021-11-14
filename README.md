@@ -1,1 +1,2 @@
-# archiver
+# kazarch
+Arch auto install script
